@@ -268,56 +268,6 @@ with right:
                  text_auto=True,title="Live Parameters")
     st.plotly_chart(fig, use_container_width=True)
 
-# ==========================================================
-# THREAT INTELLIGENCE
-# ==========================================================
-st.subheader("🛡️ AI Threat Intelligence")
-
-alerts = []
-future_risks = []
-actions = []
-
-if LIT101 > 820:
-    alerts.append("Tank level unstable and critically high.")
-    future_risks.append("Overflow attack may occur soon.")
-    actions.append("Reduce inflow immediately.")
-
-if PIT501 > 35:
-    alerts.append("Pressure spike detected in main line.")
-    future_risks.append("Pipeline damage possible.")
-    actions.append("Release pressure safely.")
-
-if P101 == 0 and FIT101 > 1:
-    alerts.append("Pump OFF but flow still active.")
-    future_risks.append("Possible spoofing or bypass attack.")
-    actions.append("Inspect actuator commands.")
-
-if MV101 == 0 and FIT101 > 1:
-    alerts.append("Valve closed but flow detected.")
-    future_risks.append("Valve compromise suspected.")
-    actions.append("Inspect valve integrity.")
-
-if len(alerts) == 0:
-    alerts.append("All monitored parameters stable.")
-    future_risks.append("No immediate attack predicted.")
-    actions.append("Continue monitoring.")
-
-a,b,c = st.columns(3)
-
-with a:
-    st.markdown("### ⚠️ Current Issues")
-    for i in alerts:
-        st.warning(i)
-
-with b:
-    st.markdown("### 🔮 Future Risks")
-    for r in future_risks:
-        st.error(r)
-
-with c:
-    st.markdown("### 🛠 Mitigation")
-    for m in actions:
-        st.success(m)
 
 # ==========================================================
 # SIMPY DIGITAL TWIN (WAVE-BASED ADVANCED)
@@ -449,6 +399,75 @@ with col2:
 
     st.plotly_chart(fig_pressure, use_container_width=True)
 
+
+
+# ==========================================================
+# THREAT INTELLIGENCE
+# ==========================================================
+st.subheader("🛡️ AI Threat Intelligence")
+if status == "🟢 Normal":
+    st.write("""
+    ✅ System is operating within the learned safe behavior profile.
+
+    Observations:
+    - Sensor readings are stable
+    - Pressure remains within safe limits
+    - Flow and actuator states are consistent
+    - No immediate cyber-physical anomalies detected
+
+    Outlook:
+    - Low probability of near-term operational disruption
+    - Continue routine monitoring and preventive maintenance
+    """)
+
+elif status == "🟠 Suspicious":
+    st.write("""
+    ⚠️ Early Warning: Emerging abnormal behavior detected.
+
+    Potential Indicators:
+    - Mild sensor drift from baseline operating pattern
+    - Pressure imbalance beginning to develop
+    - Flow inconsistency between linked process stages
+    - Actuator behavior slightly deviating from expected response
+
+    Future Risk Possibilities:
+    - Progressive sensor manipulation attempt
+    - Developing blockage or leakage in pipeline section
+    - Pump efficiency degradation
+    - Escalation into coordinated attack if ignored
+
+    Recommended Actions:
+    - Increase monitoring frequency
+    - Verify sensor calibration
+    - Inspect pump and valve response logs
+    - Prepare preventive intervention
+    """)
+
+else:
+    st.write("""
+    🚨 Critical Threat State: High probability of active or imminent attack scenario.
+
+    Severe Indicators:
+    - Abnormal pressure pattern suggests process tampering
+    - Overflow condition may occur if tank level continues rising
+    - Pump-flow contradiction indicates actuator spoofing or control compromise
+    - Valve manipulation pattern detected
+    - Multi-parameter anomaly exceeds safe operational threshold
+
+    Predicted Near-Future Attack Impact:
+    - Tank overflow or shutdown event
+    - Pipeline rupture / pressure damage
+    - Water treatment interruption
+    - Unsafe plant state propagation across stages
+    - Remote attacker persistence within control logic
+
+    Immediate Mitigation Required:
+    - Switch to safe manual control mode
+    - Isolate affected pumps / valves
+    - Reduce inflow and stabilize pressure
+    - Audit PLC / SCADA commands
+    - Trigger incident response protocol
+    """)
 
 # ==========================================================
 # FUTURE OUTLOOK (SMART)
